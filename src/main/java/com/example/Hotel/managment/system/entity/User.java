@@ -7,6 +7,7 @@
 package com.example.Hotel.managment.system.entity;
 
 import com.example.Hotel.managment.system.entity.enumirated.Role;
+import com.example.Hotel.managment.system.entity.enumirated.Status;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -24,8 +25,8 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private Boolean isActive;
-
+    @Enumerated(EnumType.STRING)
+    private Status status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
@@ -69,13 +70,6 @@ public class User {
         this.role = role;
     }
 
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
 
     public Timestamp getCreatedAt() {
         return createdAt;
@@ -91,5 +85,13 @@ public class User {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
