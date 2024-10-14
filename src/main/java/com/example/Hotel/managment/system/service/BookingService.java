@@ -37,7 +37,7 @@ public class BookingService {
         return bookingMapper.toDto(booking);
     }
 
-    public List<BookingDto> findAllBooking() {
+    public List<BookingDto> findAllBookings() {
         return bookingRepository
                 .findAll()
                 .stream()

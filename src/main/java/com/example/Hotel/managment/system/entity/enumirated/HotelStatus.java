@@ -1,11 +1,11 @@
 /**
  * Author: Shaxzod Ro'ziqulov
  * User:Ruzikulov
- * DATE:13.10.2024
- * TIME:11:04
+ * DATE:14.10.2024
+ * TIME:13:44
  */
 package com.example.Hotel.managment.system.entity.enumirated;
 
-public enum RoomStatus {
-    AVAILABLE, BOOKED, DELETED
+public enum HotelStatus {
+    ACTIVE, INACTIVE, DELETE
 }

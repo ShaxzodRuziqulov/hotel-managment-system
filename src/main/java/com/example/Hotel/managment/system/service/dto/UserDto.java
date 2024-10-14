@@ -7,6 +7,8 @@
 package com.example.Hotel.managment.system.service.dto;
 
 
+import java.sql.Timestamp;
+
 public class UserDto {
     private Long id;
 
@@ -15,6 +17,7 @@ public class UserDto {
     private String password;
     private String role;
     private String status;
+
 
     public Long getId() {
         return id;
@@ -64,4 +67,6 @@ public class UserDto {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }

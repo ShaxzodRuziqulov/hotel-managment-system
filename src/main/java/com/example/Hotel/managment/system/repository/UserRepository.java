@@ -16,5 +16,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("update User u set u.status=:status where u.id=:id")
-    void updateStatus(@Param("id") Long id, @Param("status") Status status);
+    User updateStatus(@Param("id") Long id, @Param("status") Status status);
 }

@@ -8,6 +8,7 @@ package com.example.Hotel.managment.system.entity;
 
 import com.example.Hotel.managment.system.entity.enumirated.PaymentMethod;
 import com.example.Hotel.managment.system.entity.enumirated.PaymentStatus;
+import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "payment")
-public class Payment {
+public class Payment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,9 +32,6 @@ public class Payment {
     private PaymentStatus paymentStatus;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
 
     public void setId(Long id) {
         this.id = id;
@@ -83,19 +81,4 @@ public class Payment {
         this.paymentMethod = paymentMethod;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

@@ -8,14 +8,17 @@ package com.example.Hotel.managment.system.entity;
 
 import com.example.Hotel.managment.system.entity.enumirated.Role;
 import com.example.Hotel.managment.system.entity.enumirated.Status;
+import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
 
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,8 +30,7 @@ public class User {
     private Role role;
     @Enumerated(EnumType.STRING)
     private Status status;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+
 
     public void setId(Long id) {
         this.id = id;
@@ -70,22 +72,6 @@ public class User {
         this.role = role;
     }
 
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     public Status getStatus() {
         return status;

@@ -13,6 +13,7 @@ public class HotelDto {
     private String name;
     private String address;
     private BigDecimal rating;
+    private String hotelStatus;
 
     public Long getId() {
         return id;
@@ -44,5 +45,13 @@ public class HotelDto {
 
     public void setRating(BigDecimal rating) {
         this.rating = rating;
+    }
+
+    public String getHotelStatus() {
+        return hotelStatus;
+    }
+
+    public void setHotelStatus(String hotelStatus) {
+        this.hotelStatus = hotelStatus;
     }
 }

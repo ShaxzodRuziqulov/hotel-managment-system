@@ -6,6 +6,8 @@
  */
 package com.example.Hotel.managment.system.entity;
 
+import com.example.Hotel.managment.system.entity.enumirated.HotelStatus;
+import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -13,16 +15,15 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "hotel")
-public class Hotel {
+public class Hotel extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String address;
     private BigDecimal rating;
-
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    @Enumerated(EnumType.STRING)
+    private HotelStatus hotelStatus;
 
 
     public void setId(Long id) {
@@ -57,19 +58,11 @@ public class Hotel {
         this.rating = rating;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public HotelStatus getHotelStatus() {
+        return hotelStatus;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setHotelStatus(HotelStatus hotelStatus) {
+        this.hotelStatus = hotelStatus;
     }
 }

@@ -7,6 +7,7 @@
 package com.example.Hotel.managment.system.entity;
 
 import com.example.Hotel.managment.system.entity.enumirated.BookingStatus;
+import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "booking")
-public class Booking {
+public class Booking extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,8 +33,6 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
 
     public void setId(Long id) {
         this.id = id;
@@ -81,21 +80,5 @@ public class Booking {
 
     public void setBookingStatus(BookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

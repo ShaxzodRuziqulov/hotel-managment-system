@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface BookingMapper extends EntityMapper<BookingDto, Booking> {
     BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 

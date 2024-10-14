@@ -52,7 +52,7 @@ public class UserService {
                 .orElseGet(User::new);
     }
 
-    public void delete(Long id) {
-        userRepository.updateStatus(id, Status.DELETE);
+    public User delete(Long id) {
+        return userRepository.updateStatus(id, Status.DELETE);
     }
 }

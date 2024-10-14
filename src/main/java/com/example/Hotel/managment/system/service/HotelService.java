@@ -7,6 +7,7 @@
 package com.example.Hotel.managment.system.service;
 
 import com.example.Hotel.managment.system.entity.Hotel;
+import com.example.Hotel.managment.system.entity.enumirated.HotelStatus;
 import com.example.Hotel.managment.system.repository.HotelRepository;
 import com.example.Hotel.managment.system.service.dto.HotelDto;
 import com.example.Hotel.managment.system.service.mapper.HotelMapper;
@@ -37,7 +38,7 @@ public class HotelService {
         return hotelMapper.toDto(hotel);
     }
 
-    public List<HotelDto> findAll() {
+    public List<HotelDto> findAllHotels() {
         return hotelRepository
                 .findAll()
                 .stream()
@@ -49,6 +50,9 @@ public class HotelService {
         return hotelRepository
                 .findById(id)
                 .orElseGet(Hotel::new);
+    }
+    public Hotel delete(Long id){
+        return hotelRepository.updateByHotelStatus(id, HotelStatus.DELETE);
     }
 
 }
