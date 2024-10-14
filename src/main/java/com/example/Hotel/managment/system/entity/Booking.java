@@ -30,7 +30,7 @@ public class Booking {
     private LocalDate startDate;
     private LocalDate endDate;
     @Enumerated(EnumType.STRING)
-    private BookingStatus status;
+    private BookingStatus bookingStatus;
 
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -75,12 +75,12 @@ public class Booking {
         this.endDate = endDate;
     }
 
-    public BookingStatus getStatus() {
-        return status;
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
     }
 
-    public void setStatus(BookingStatus status) {
-        this.status = status;
+    public void setBookingStatus(BookingStatus bookingStatus) {
+        this.bookingStatus = bookingStatus;
     }
 
     public Timestamp getCreatedAt() {

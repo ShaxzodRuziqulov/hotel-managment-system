@@ -23,7 +23,7 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
-
+    @Enumerated(EnumType.STRING)
     private RoomType roomType;
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
