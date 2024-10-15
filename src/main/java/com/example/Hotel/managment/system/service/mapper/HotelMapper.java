@@ -19,4 +19,13 @@ public interface HotelMapper extends EntityMapper<HotelDto, Hotel> {
     HotelDto toDto(Hotel hotel);
 
     Hotel toEntity(HotelDto hotelDto);
+
+    default Hotel fromId(Long id) {
+        if (id == 0) {
+            return null;
+        }
+        Hotel hotel = new Hotel();
+        hotel.setId(id);
+        return hotel;
+    }
 }

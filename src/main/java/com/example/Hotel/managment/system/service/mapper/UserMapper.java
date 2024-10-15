@@ -19,4 +19,13 @@ public interface UserMapper extends EntityMapper<UserDto, User> {
     UserDto toDto(User user);
 
     User toEntity(UserDto userDto);
+
+    default User fromId(Long id) {
+        if (id == 0) {
+            return null;
+        }
+        User user = new User();
+        user.setId(id);
+        return user;
+    }
 }

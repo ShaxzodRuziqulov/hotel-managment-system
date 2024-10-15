@@ -21,4 +21,13 @@ public interface PaymentMapper extends EntityMapper<PaymentDto, Payment> {
 
     @Mapping(source = "bookingId", target = "booking.id")
     Payment toEntity(PaymentDto paymentDto);
+
+    default Payment fromId(Long id) {
+        if (id == 0) {
+            return null;
+        }
+        Payment payment = new Payment();
+        payment.setId(id);
+        return payment;
+    }
 }

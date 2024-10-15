@@ -21,4 +21,13 @@ public interface RoomMapper extends EntityMapper<RoomDto, Room> {
 
     @Mapping(source = "hotelId", target = "hotel.id")
     Room toEntity(RoomDto roomDto);
+
+    default Room fromId(Long id) {
+        if (id == 0) {
+            return null;
+        }
+        Room room = new Room();
+        room.setId(id);
+        return room;
+    }
 }

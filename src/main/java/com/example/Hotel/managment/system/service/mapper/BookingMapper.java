@@ -23,4 +23,13 @@ public interface BookingMapper extends EntityMapper<BookingDto, Booking> {
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roomId", target = "room.id")
     Booking toEntity(BookingDto bookingDto);
+
+    default Booking fromId(Long id) {
+        if (id == 0) {
+            return null;
+        }
+        Booking booking = new Booking();
+        booking.setId(id);
+        return booking;
+    }
 }
