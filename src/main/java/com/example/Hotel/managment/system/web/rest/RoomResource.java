@@ -58,5 +58,11 @@ public class RoomResource {
         roomService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/room/category/{category}")
+    public ResponseEntity<?> findCategory(@PathVariable String category) {
+        List<Room> result = roomService.roomCategory(category);
+        return ResponseEntity.ok(result);
+    }
 }
 

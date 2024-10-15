@@ -15,7 +15,7 @@ public class RoomDto {
 
     private String roomType;
     private BigDecimal price;
-    private String status;
+    private String roomStatus;
 
     public Long getId() {
         return id;
@@ -49,11 +49,11 @@ public class RoomDto {
         this.price = price;
     }
 
-    public String getStatus() {
-        return status;
+    public String getRoomStatus() {
+        return roomStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setRoomStatus(String roomStatus) {
+        this.roomStatus = roomStatus;
     }
 }

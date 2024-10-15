@@ -57,5 +57,9 @@ public class RoomService {
         return roomRepository
                 .updateRoomByStatus(id, RoomStatus.DELETED);
     }
+
+    public List<Room> roomCategory(String category) {
+        return roomRepository.findByRoomType(category);
+    }
 }
 

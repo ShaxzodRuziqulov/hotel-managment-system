@@ -16,13 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface PaymentMapper extends EntityMapper<PaymentDto, Payment> {
     PaymentMapper INSTANCE = Mappers.getMapper(PaymentMapper.class);
 
-    @Mapping(source = "paymentStatus", target = "paymentStatus")
-    @Mapping(source = "paymentMethod", target = "paymentMethod")
     @Mapping(source = "booking.id", target = "bookingId")
     PaymentDto toDto(Payment payment);
 
-    @Mapping(source = "paymentStatus", target = "paymentStatus")
-    @Mapping(source = "paymentMethod", target = "paymentMethod")
     @Mapping(source = "bookingId", target = "booking.id")
     Payment toEntity(PaymentDto paymentDto);
 }

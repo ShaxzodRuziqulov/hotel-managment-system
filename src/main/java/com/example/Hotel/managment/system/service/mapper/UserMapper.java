@@ -16,11 +16,7 @@ import org.mapstruct.factory.Mappers;
 public interface UserMapper extends EntityMapper<UserDto, User> {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(source = "role", target = "role")
-    @Mapping(source = "status", target = "status")
     UserDto toDto(User user);
 
-    @Mapping(target = "role", source = "role")
-    @Mapping(target = "status", source = "status")
     User toEntity(UserDto userDto);
 }

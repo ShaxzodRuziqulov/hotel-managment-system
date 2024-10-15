@@ -16,13 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface RoomMapper extends EntityMapper<RoomDto, Room> {
     RoomMapper INSTANCE = Mappers.getMapper(RoomMapper.class);
 
-    @Mapping(source = "roomType", target = "roomType")
-    @Mapping(source = "status", target = "status")
     @Mapping(source = "hotel.id", target = "hotelId")
     RoomDto toDto(Room room);
 
-    @Mapping(source = "roomType", target = "roomType")
-    @Mapping(source = "status", target = "status")
     @Mapping(source = "hotelId", target = "hotel.id")
     Room toEntity(RoomDto roomDto);
 }

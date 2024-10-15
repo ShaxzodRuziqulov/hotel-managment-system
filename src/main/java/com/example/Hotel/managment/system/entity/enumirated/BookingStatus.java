@@ -7,5 +7,5 @@
 package com.example.Hotel.managment.system.entity.enumirated;
 
 public enum BookingStatus {
-    PENDING, CONFIRMED, CANCELLED
+    PENDING, CONFIRMED, CANCELLED,DELETED
 }

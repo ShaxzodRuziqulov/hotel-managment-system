@@ -53,10 +53,10 @@ public class BookingResource {
         return ResponseEntity.ok(result);
     }
 
-//    @DeleteMapping("/booking/delete/{id}")
-//    public ResponseEntity<?> delete(@PathVariable Long id) {
-//        bookingService.delete(id);
-//        return ResponseEntity.ok().build();
-//    }
+    @DeleteMapping("/booking/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        bookingService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }
 

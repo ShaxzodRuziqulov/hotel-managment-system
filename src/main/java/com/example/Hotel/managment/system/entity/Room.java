@@ -12,7 +12,6 @@ import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "room")
@@ -28,7 +27,7 @@ public class Room extends BaseEntity {
     private RoomType roomType;
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
-    private RoomStatus status;
+    private RoomStatus roomStatus;
 
     public void setId(Long id) {
         this.id = id;
@@ -62,12 +61,12 @@ public class Room extends BaseEntity {
         this.price = price;
     }
 
-    public RoomStatus getStatus() {
-        return status;
+    public RoomStatus getRoomStatus() {
+        return roomStatus;
     }
 
-    public void setStatus(RoomStatus status) {
-        this.status = status;
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
     }
 
 }
