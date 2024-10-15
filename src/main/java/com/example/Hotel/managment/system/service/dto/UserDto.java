@@ -7,7 +7,7 @@
 package com.example.Hotel.managment.system.service.dto;
 
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class UserDto {
     private Long id;
@@ -17,7 +17,8 @@ public class UserDto {
     private String password;
     private String role;
     private String status;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Long getId() {
         return id;
@@ -68,5 +69,19 @@ public class UserDto {
         this.status = status;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

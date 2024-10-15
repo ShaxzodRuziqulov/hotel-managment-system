@@ -8,6 +8,7 @@ package com.example.Hotel.managment.system.service.dto;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class RoomDto {
     private Long id;
@@ -16,7 +17,8 @@ public class RoomDto {
     private String roomType;
     private BigDecimal price;
     private String roomStatus;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     public Long getId() {
         return id;
     }
@@ -55,5 +57,21 @@ public class RoomDto {
 
     public void setRoomStatus(String roomStatus) {
         this.roomStatus = roomStatus;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
