@@ -14,7 +14,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper extends EntityMapper<UserDto, User> {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     UserDto toDto(User user);
 

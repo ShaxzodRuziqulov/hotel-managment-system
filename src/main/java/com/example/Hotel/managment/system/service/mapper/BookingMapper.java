@@ -10,11 +10,9 @@ import com.example.Hotel.managment.system.entity.Booking;
 import com.example.Hotel.managment.system.service.dto.BookingDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {UserMapper.class, RoomMapper.class})
 public interface BookingMapper extends EntityMapper<BookingDto, Booking> {
-    BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "room.id", target = "roomId")
@@ -25,7 +23,7 @@ public interface BookingMapper extends EntityMapper<BookingDto, Booking> {
     Booking toEntity(BookingDto bookingDto);
 
     default Booking fromId(Long id) {
-        if (id == 0) {
+        if (id == null) {
             return null;
         }
         Booking booking = new Booking();

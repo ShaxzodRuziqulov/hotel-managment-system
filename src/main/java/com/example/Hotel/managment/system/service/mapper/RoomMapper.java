@@ -12,9 +12,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = HotelMapper.class)
 public interface RoomMapper extends EntityMapper<RoomDto, Room> {
-    RoomMapper INSTANCE = Mappers.getMapper(RoomMapper.class);
 
     @Mapping(source = "hotel.id", target = "hotelId")
     RoomDto toDto(Room room);

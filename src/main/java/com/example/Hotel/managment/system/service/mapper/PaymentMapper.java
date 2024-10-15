@@ -12,9 +12,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = BookingMapper.class)
 public interface PaymentMapper extends EntityMapper<PaymentDto, Payment> {
-    PaymentMapper INSTANCE = Mappers.getMapper(PaymentMapper.class);
 
     @Mapping(source = "booking.id", target = "bookingId")
     PaymentDto toDto(Payment payment);
