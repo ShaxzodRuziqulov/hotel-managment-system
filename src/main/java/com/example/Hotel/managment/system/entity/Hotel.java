@@ -9,11 +9,15 @@ package com.example.Hotel.managment.system.entity;
 import com.example.Hotel.managment.system.entity.enumirated.HotelStatus;
 import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+@Getter
 @Entity
+@Setter
 @Table(name = "hotel")
 public class Hotel extends BaseEntity {
     @Id
@@ -24,45 +28,4 @@ public class Hotel extends BaseEntity {
     private BigDecimal rating;
     @Enumerated(EnumType.STRING)
     private HotelStatus hotelStatus;
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public BigDecimal getRating() {
-        return rating;
-    }
-
-    public void setRating(BigDecimal rating) {
-        this.rating = rating;
-    }
-
-    public HotelStatus getHotelStatus() {
-        return hotelStatus;
-    }
-
-    public void setHotelStatus(HotelStatus hotelStatus) {
-        this.hotelStatus = hotelStatus;
-    }
 }
