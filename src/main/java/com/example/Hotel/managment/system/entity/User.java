@@ -10,10 +10,6 @@ import com.example.Hotel.managment.system.entity.enumirated.Role;
 import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.sql.Timestamp;
 
 
 @Entity
@@ -24,13 +20,15 @@ public class User extends BaseEntity {
     private Long id;
 
     private String userName;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
     @Enumerated(EnumType.STRING)
     private Status status;
-
+    private boolean isEnabled;
 
     public void setId(Long id) {
         this.id = id;
@@ -79,5 +77,13 @@ public class User extends BaseEntity {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
     }
 }

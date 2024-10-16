@@ -7,18 +7,26 @@
 package com.example.Hotel.managment.system.service.dto;
 
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 
 public class UserDto {
     private Long id;
 
     private String userName;
+
+    @Email
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
     private String role;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isEnabled;
 
     public Long getId() {
         return id;
@@ -83,5 +91,13 @@ public class UserDto {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

@@ -9,6 +9,7 @@ package com.example.Hotel.managment.system.web.rest;
 import com.example.Hotel.managment.system.entity.User;
 import com.example.Hotel.managment.system.service.UserService;
 import com.example.Hotel.managment.system.service.dto.UserDto;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +28,14 @@ public class UserResource {
 
     @PostMapping("/user/create")
     public ResponseEntity<?> create(@RequestBody UserDto userDto) throws URISyntaxException {
-        UserDto result = userService.create(userDto);
+        UserDto result = userService.createUser(userDto);
         return ResponseEntity.created(new URI("/api/user/create" + result.getId())).body(result);
     }
-
+    @GetMapping("/user/confirm")
+    public ResponseEntity<String> confirmEmail(@RequestParam String email) {
+        userService.enableUser(email); // Email tasdiqlash
+        return ResponseEntity.ok("Email tasdiqlandi. Endi tizimga kirishingiz mumkin.");
+    }
     @PutMapping("/user/update/{id}")
     public ResponseEntity<?> update(@RequestBody UserDto userDto, @PathVariable Long id) throws URISyntaxException {
         if (userDto.getId() != 0 && !userDto.getId().equals(id)) {
@@ -56,5 +61,12 @@ public class UserResource {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         User user = userService.delete(id);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/user/page")
+    public ResponseEntity<?> getUsers(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int size) {
+        Page<User> userPage = userService.getUsers(page, size);
+        return ResponseEntity.ok(userPage);
     }
 }

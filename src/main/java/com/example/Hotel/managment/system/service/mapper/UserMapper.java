@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper extends EntityMapper<UserDto, User> {
-
+    @Mapping(target = "password", ignore = true)
     UserDto toDto(User user);
 
     User toEntity(UserDto userDto);

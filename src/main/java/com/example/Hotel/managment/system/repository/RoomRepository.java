@@ -22,4 +22,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Room updateRoomByStatus(@Param("id") Long id, @Param("status") RoomStatus status);
     @Query(value = "select r from Room  r where r.roomType=:category")
     List<Room> findByRoomType(String category);
+
+//    List<Room> findByCategory(String category);
+//    List<Room> findByStatus(String status);
 }
