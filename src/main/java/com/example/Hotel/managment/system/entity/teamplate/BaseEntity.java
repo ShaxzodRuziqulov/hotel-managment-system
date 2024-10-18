@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Data
 @MappedSuperclass
 @EntityListeners(AutoCloseable.class)
 public class BaseEntity {

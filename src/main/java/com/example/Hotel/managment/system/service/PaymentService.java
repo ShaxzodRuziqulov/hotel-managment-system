@@ -7,6 +7,7 @@
 package com.example.Hotel.managment.system.service;
 
 import com.example.Hotel.managment.system.entity.Payment;
+import com.example.Hotel.managment.system.entity.enumirated.PaymentStatus;
 import com.example.Hotel.managment.system.repository.PaymentRepository;
 import com.example.Hotel.managment.system.service.dto.PaymentDto;
 import com.example.Hotel.managment.system.service.mapper.PaymentMapper;
@@ -50,6 +51,10 @@ public class PaymentService {
         return paymentRepository
                 .findById(id)
                 .orElseGet(Payment::new);
+    }
+
+    public Payment delete(Long id) {
+        return paymentRepository.updateByPaymentStatus(id, PaymentStatus.FAILED);
     }
 
 }

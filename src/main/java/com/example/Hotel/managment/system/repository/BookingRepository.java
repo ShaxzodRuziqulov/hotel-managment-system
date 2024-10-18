@@ -17,4 +17,6 @@ import org.springframework.stereotype.Repository;
 public interface BookingRepository extends JpaRepository<Booking,Long> {
     @Query("update Booking b set b.bookingStatus=:status where b.id=:id")
     Booking updateByBookingStatus(@Param("id") Long id, @Param("status")BookingStatus status);
+
+
 }

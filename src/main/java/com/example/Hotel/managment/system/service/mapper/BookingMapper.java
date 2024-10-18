@@ -14,6 +14,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {UserMapper.class, RoomMapper.class})
 public interface BookingMapper extends EntityMapper<BookingDto, Booking> {
 
+
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "room.id", target = "roomId")
     BookingDto toDto(Booking booking);

@@ -26,16 +26,13 @@ public class UserResource {
         this.userService = userService;
     }
 
+    //
     @PostMapping("/user/create")
     public ResponseEntity<?> create(@RequestBody UserDto userDto) throws URISyntaxException {
-        UserDto result = userService.createUser(userDto);
+        UserDto result = userService.create(userDto);
         return ResponseEntity.created(new URI("/api/user/create" + result.getId())).body(result);
     }
-    @GetMapping("/user/confirm")
-    public ResponseEntity<String> confirmEmail(@RequestParam String email) {
-        userService.enableUser(email); // Email tasdiqlash
-        return ResponseEntity.ok("Email tasdiqlandi. Endi tizimga kirishingiz mumkin.");
-    }
+
     @PutMapping("/user/update/{id}")
     public ResponseEntity<?> update(@RequestBody UserDto userDto, @PathVariable Long id) throws URISyntaxException {
         if (userDto.getId() != 0 && !userDto.getId().equals(id)) {
@@ -68,5 +65,11 @@ public class UserResource {
                                       @RequestParam(defaultValue = "10") int size) {
         Page<User> userPage = userService.getUsers(page, size);
         return ResponseEntity.ok(userPage);
+    }
+
+    @GetMapping("/user/find/{email}")
+    public ResponseEntity<?> findActiveUserByEmail(@PathVariable String email) {
+        User result = userService.findActiveUserByEmail(email);
+        return ResponseEntity.ok(result);
     }
 }

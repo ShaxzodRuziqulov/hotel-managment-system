@@ -6,15 +6,13 @@
  */
 package com.example.Hotel.managment.system.service.mapper;
 
+
 import com.example.Hotel.managment.system.entity.User;
 import com.example.Hotel.managment.system.service.dto.UserDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper extends EntityMapper<UserDto, User> {
-    @Mapping(target = "password", ignore = true)
     UserDto toDto(User user);
 
     User toEntity(UserDto userDto);

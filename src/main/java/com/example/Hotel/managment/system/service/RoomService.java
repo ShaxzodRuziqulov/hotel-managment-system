@@ -8,6 +8,7 @@ package com.example.Hotel.managment.system.service;
 
 import com.example.Hotel.managment.system.entity.Room;
 import com.example.Hotel.managment.system.entity.enumirated.RoomStatus;
+import com.example.Hotel.managment.system.entity.enumirated.RoomType;
 import com.example.Hotel.managment.system.repository.RoomRepository;
 import com.example.Hotel.managment.system.service.dto.RoomDto;
 import com.example.Hotel.managment.system.service.mapper.RoomMapper;
@@ -59,7 +60,18 @@ public class RoomService {
     }
 
     public List<Room> roomCategory(String category) {
-        return roomRepository.findByRoomType(category);
+        RoomType roomType;
+        try {
+            roomType = RoomType.valueOf(category.toUpperCase()); // Convert String to Enum
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid room type category: " + category);
+        }
+        return roomRepository.findByRoomType(roomType);
     }
+
+    public List<Room> findByRoomTypeAndAndPriceRange(RoomType roomType, Double minPrice, Double maxPrice) {
+        return roomRepository.findByRoomTypeAndPriceRange(roomType, minPrice, maxPrice);
+    }
+
 }
 

@@ -58,5 +58,11 @@ public class HotelResource {
         hotelService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/hotel/find/{name}/{address}")
+    public ResponseEntity<?> findByNameAndAddress(@PathVariable String name, @PathVariable String address) {
+        List<HotelDto> dtoList = hotelService.findByNameAndAddress(name, address);
+        return ResponseEntity.ok(dtoList);
+    }
 }
 

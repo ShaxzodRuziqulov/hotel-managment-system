@@ -7,6 +7,7 @@
 package com.example.Hotel.managment.system.web.rest;
 
 import com.example.Hotel.managment.system.entity.Room;
+import com.example.Hotel.managment.system.entity.enumirated.RoomType;
 import com.example.Hotel.managment.system.service.RoomService;
 import com.example.Hotel.managment.system.service.dto.RoomDto;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +64,14 @@ public class RoomResource {
     public ResponseEntity<?> findCategory(@PathVariable String category) {
         List<Room> result = roomService.roomCategory(category);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/room/find/{roomType}/{minPrice}/{maxPrice}")
+    public ResponseEntity<?> findByRoomTypeAndAndPriceRange(@PathVariable RoomType roomType,
+                                                            @PathVariable Double minPrice,
+                                                            @PathVariable Double maxPrice) {
+        List<Room> roomList = roomService.findByRoomTypeAndAndPriceRange(roomType, minPrice, maxPrice);
+        return ResponseEntity.ok(roomList);
     }
 }
 

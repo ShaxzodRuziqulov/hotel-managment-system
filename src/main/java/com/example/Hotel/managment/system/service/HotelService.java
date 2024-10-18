@@ -51,8 +51,17 @@ public class HotelService {
                 .findById(id)
                 .orElseGet(Hotel::new);
     }
-    public Hotel delete(Long id){
+
+    public Hotel delete(Long id) {
         return hotelRepository.updateByHotelStatus(id, HotelStatus.DELETE);
+    }
+
+    public List<HotelDto> findByNameAndAddress(String name, String address) {
+        return hotelRepository.findByNameAndAddress(name, address)
+                .stream()
+                .map(hotelMapper::toDto)
+                .collect(Collectors
+                        .toList());
     }
 
 }

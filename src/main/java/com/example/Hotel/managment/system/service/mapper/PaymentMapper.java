@@ -6,11 +6,11 @@
  */
 package com.example.Hotel.managment.system.service.mapper;
 
+
 import com.example.Hotel.managment.system.entity.Payment;
 import com.example.Hotel.managment.system.service.dto.PaymentDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = BookingMapper.class)
 public interface PaymentMapper extends EntityMapper<PaymentDto, Payment> {

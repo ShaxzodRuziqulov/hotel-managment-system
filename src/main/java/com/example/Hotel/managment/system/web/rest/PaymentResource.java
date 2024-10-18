@@ -53,10 +53,10 @@ public class PaymentResource {
         return ResponseEntity.ok(result);
     }
 
-//    @DeleteMapping("/payment/delete/{id}")
-//    public ResponseEntity<?> delete(@PathVariable Long id) {
-//        paymentService.delete(id);
-//        return ResponseEntity.ok().build();
-//    }
+    @DeleteMapping("/payment/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        paymentService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }
 
