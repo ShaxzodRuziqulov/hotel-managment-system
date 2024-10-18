@@ -8,6 +8,7 @@ package com.example.Hotel.managment.system.service.mapper;
 
 
 import com.example.Hotel.managment.system.entity.User;
+import com.example.Hotel.managment.system.service.dto.RegisterUserDto;
 import com.example.Hotel.managment.system.service.dto.UserDto;
 import org.mapstruct.Mapper;
 
@@ -16,6 +17,8 @@ public interface UserMapper extends EntityMapper<UserDto, User> {
     UserDto toDto(User user);
 
     User toEntity(UserDto userDto);
+
+    User toUser(RegisterUserDto registerUserDto);
 
     default User fromId(Long id) {
         if (id == 0) {

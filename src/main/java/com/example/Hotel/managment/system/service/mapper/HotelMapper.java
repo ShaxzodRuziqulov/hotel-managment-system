@@ -6,7 +6,6 @@
  */
 package com.example.Hotel.managment.system.service.mapper;
 
-
 import com.example.Hotel.managment.system.entity.Hotel;
 import com.example.Hotel.managment.system.service.dto.HotelDto;
 import org.mapstruct.Mapper;

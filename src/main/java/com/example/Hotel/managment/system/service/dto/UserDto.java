@@ -22,6 +22,5 @@ public class UserDto {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private boolean isEnabled;
 
 }
