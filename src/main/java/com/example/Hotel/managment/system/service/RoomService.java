@@ -62,7 +62,7 @@ public class RoomService {
     public List<Room> roomCategory(String category) {
         RoomType roomType;
         try {
-            roomType = RoomType.valueOf(category.toUpperCase()); // Convert String to Enum
+            roomType = RoomType.valueOf(category.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid room type category: " + category);
         }
