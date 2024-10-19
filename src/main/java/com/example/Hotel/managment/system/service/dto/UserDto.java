@@ -7,6 +7,7 @@
 package com.example.Hotel.managment.system.service.dto;
 
 
+import com.example.Hotel.managment.system.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ public class UserDto {
     private String userName;
     private String email;
     private String password;
-    private String role;
+    private Role role;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

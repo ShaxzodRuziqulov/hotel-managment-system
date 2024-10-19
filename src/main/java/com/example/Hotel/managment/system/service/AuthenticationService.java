@@ -4,11 +4,11 @@
  * DATE:18.10.2024
  * TIME:23:27
  */
-package com.example.Hotel.managment.system.security;
+package com.example.Hotel.managment.system.service;
 
 import com.example.Hotel.managment.system.entity.User;
-import com.example.Hotel.managment.system.entity.enumirated.Role;
 import com.example.Hotel.managment.system.entity.enumirated.Status;
+import com.example.Hotel.managment.system.repository.RoleRepository;
 import com.example.Hotel.managment.system.repository.UserRepository;
 import com.example.Hotel.managment.system.service.dto.LoginUserDto;
 import com.example.Hotel.managment.system.service.dto.RegisterUserDto;
@@ -22,15 +22,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationService(UserRepository userRepository,
+                                 RoleRepository roleRepository,
                                  PasswordEncoder passwordEncoder,
-                                 UserMapper userMapper, AuthenticationManager authenticationManager) {
+                                 UserMapper userMapper,
+                                 AuthenticationManager authenticationManager
+    ) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
         this.authenticationManager = authenticationManager;
@@ -41,7 +46,7 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setStatus(Status.ACTIVE);
         if (input.getRole() == null) {
-            user.setRole(Role.USER);
+            user.setRole(roleRepository.findByName("ROLE_USER"));
         }
         user = userRepository.save(user);
         return userMapper.toDto(user);
@@ -50,11 +55,11 @@ public class AuthenticationService {
     public User authenticate(LoginUserDto input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
+                        input.getUserName(),
                         input.getPassword()
                 )
         );
 
-        return userRepository.findByEmail(input.getEmail()).orElseThrow();
+        return userRepository.findByUserName(input.getUserName()).orElseThrow();
     }
 }

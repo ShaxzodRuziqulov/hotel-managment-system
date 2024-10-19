@@ -4,8 +4,9 @@
  * DATE:16.10.2024
  * TIME:12:06
  */
-package com.example.Hotel.managment.system.security;
+package com.example.Hotel.managment.system.config;
 
+import com.example.Hotel.managment.system.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

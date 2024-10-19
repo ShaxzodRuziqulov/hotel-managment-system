@@ -4,7 +4,7 @@
  * DATE:18.10.2024
  * TIME:21:50
  */
-package com.example.Hotel.managment.system.security;
+package com.example.Hotel.managment.system.config;
 
 import com.example.Hotel.managment.system.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ public class ApplicationConfiguration {
     }
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
+        return username -> userRepository.findByUserName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

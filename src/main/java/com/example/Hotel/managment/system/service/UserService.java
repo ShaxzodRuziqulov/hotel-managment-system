@@ -7,7 +7,6 @@
 package com.example.Hotel.managment.system.service;
 
 import com.example.Hotel.managment.system.entity.User;
-import com.example.Hotel.managment.system.entity.enumirated.Role;
 import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.repository.UserRepository;
 import com.example.Hotel.managment.system.service.dto.UserDto;

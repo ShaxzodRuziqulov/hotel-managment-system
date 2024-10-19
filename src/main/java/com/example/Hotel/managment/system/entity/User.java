@@ -6,7 +6,6 @@
  */
 package com.example.Hotel.managment.system.entity;
 
-import com.example.Hotel.managment.system.entity.enumirated.Role;
 import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
@@ -15,28 +14,32 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "role_id")
     private Role role;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return Collections.singleton(this.role);
     }
 
     @Override

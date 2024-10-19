@@ -4,10 +4,12 @@
  * DATE:18.10.2024
  * TIME:23:52
  */
-package com.example.Hotel.managment.system.security;
+package com.example.Hotel.managment.system.web.rest;
 
 import com.example.Hotel.managment.system.entity.User;
-import com.example.Hotel.managment.system.security.response.LoginResponse;
+import com.example.Hotel.managment.system.security.JwtService;
+import com.example.Hotel.managment.system.model.response.LoginResponse;
+import com.example.Hotel.managment.system.service.AuthenticationService;
 import com.example.Hotel.managment.system.service.dto.LoginUserDto;
 import com.example.Hotel.managment.system.service.dto.RegisterUserDto;
 import com.example.Hotel.managment.system.service.dto.UserDto;
@@ -19,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/auth")
 @RestController
-public class AuthenticationController {
+public class AuthenticationResource {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
+    public AuthenticationResource(JwtService jwtService, AuthenticationService authenticationService) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
     }
@@ -36,12 +38,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
 
-        LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
+        LoginResponse loginResponse = LoginResponse.builder().token(jwtToken).expiresIn(jwtService.getExpirationTime()).build();
         return ResponseEntity.ok(loginResponse);
     }
 }
