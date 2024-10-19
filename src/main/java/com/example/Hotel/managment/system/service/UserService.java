@@ -69,12 +69,4 @@ public class UserService {
     public User findActiveUserByEmail(String email) {
         return userRepository.findActiveUserByEmail(email, Status.ACTIVE);
     }
-
-    public List<User> allUsers() {
-        List<User> users = new ArrayList<>();
-
-        userRepository.findAll().forEach(users::add);
-
-        return users;
-    }
 }

@@ -7,10 +7,12 @@
 package com.example.Hotel.managment.system.web.rest;
 
 import com.example.Hotel.managment.system.entity.User;
+import com.example.Hotel.managment.system.model.response.RefreshTokenResponse;
 import com.example.Hotel.managment.system.security.JwtService;
 import com.example.Hotel.managment.system.model.response.LoginResponse;
 import com.example.Hotel.managment.system.service.AuthenticationService;
 import com.example.Hotel.managment.system.service.dto.LoginUserDto;
+import com.example.Hotel.managment.system.service.dto.RefreshTokenDto;
 import com.example.Hotel.managment.system.service.dto.RegisterUserDto;
 import com.example.Hotel.managment.system.service.dto.UserDto;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +47,18 @@ public class AuthenticationResource {
 
         LoginResponse loginResponse = LoginResponse.builder().token(jwtToken).expiresIn(jwtService.getExpirationTime()).build();
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
+
+        User refreshTokenUser = authenticationService.authenticateRefresh(refreshTokenDto);
+
+        String rwtToken = jwtService.generateRefreshToken(refreshTokenUser);
+
+        RefreshTokenResponse refreshTokenResponse = RefreshTokenResponse.builder().token(rwtToken).expiresIn(jwtService.getExpirationTimeRefresh()).build();
+
+        return ResponseEntity.ok(refreshTokenResponse);
+
     }
 }
