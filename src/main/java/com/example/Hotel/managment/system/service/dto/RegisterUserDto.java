@@ -17,5 +17,5 @@ public class RegisterUserDto {
 
     private String userName;
 
-    private Role role;
+    private Long roleId;
 }

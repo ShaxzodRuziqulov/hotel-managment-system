@@ -11,6 +11,7 @@ import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.repository.RoleRepository;
 import com.example.Hotel.managment.system.repository.UserRepository;
 import com.example.Hotel.managment.system.service.dto.LoginUserDto;
+import com.example.Hotel.managment.system.service.dto.RefreshTokenDto;
 import com.example.Hotel.managment.system.service.dto.RegisterUserDto;
 import com.example.Hotel.managment.system.service.dto.UserDto;
 import com.example.Hotel.managment.system.service.mapper.UserMapper;
@@ -45,7 +46,7 @@ public class AuthenticationService {
         User user = userMapper.toUser(input);
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setStatus(Status.ACTIVE);
-        if (input.getRole() == null) {
+        if (input.getRoleId() == null) {
             user.setRole(roleRepository.findByName("ROLE_USER"));
         }
         user = userRepository.save(user);
@@ -60,6 +61,19 @@ public class AuthenticationService {
                 )
         );
 
-        return userRepository.findByUserName(input.getUserName()).orElseThrow();
+        return userRepository.findByUserName(input.getUserName())
+                .orElseThrow();
+    }
+
+    public User authenticateRefresh(RefreshTokenDto input) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        input.getUserName(),
+                        input.getPassword()
+                )
+        );
+
+        return userRepository.findByUserName(input.getUserName())
+                .orElseThrow();
     }
 }
