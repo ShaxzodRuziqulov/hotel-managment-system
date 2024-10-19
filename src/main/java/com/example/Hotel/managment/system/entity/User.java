@@ -44,7 +44,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return email;
+        return userName;
     }
 
     @Override
