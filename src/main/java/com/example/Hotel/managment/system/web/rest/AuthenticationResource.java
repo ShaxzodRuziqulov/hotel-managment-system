@@ -7,7 +7,9 @@
 package com.example.Hotel.managment.system.web.rest;
 
 import com.example.Hotel.managment.system.entity.User;
+import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.model.response.RefreshTokenResponse;
+import com.example.Hotel.managment.system.repository.UserRepository;
 import com.example.Hotel.managment.system.security.JwtService;
 import com.example.Hotel.managment.system.model.response.LoginResponse;
 import com.example.Hotel.managment.system.service.AuthenticationService;
@@ -15,21 +17,21 @@ import com.example.Hotel.managment.system.service.dto.LoginUserDto;
 import com.example.Hotel.managment.system.service.dto.RefreshTokenDto;
 import com.example.Hotel.managment.system.service.dto.RegisterUserDto;
 import com.example.Hotel.managment.system.service.dto.UserDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationResource {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
+    private final UserRepository userRepository;
 
-    public AuthenticationResource(JwtService jwtService, AuthenticationService authenticationService) {
+    public AuthenticationResource(JwtService jwtService, AuthenticationService authenticationService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/signup")
@@ -38,6 +40,20 @@ public class AuthenticationResource {
 
         return ResponseEntity.ok(registeredUser);
     }
+
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestParam String email, @RequestParam String verificationCode) {
+        User user = userRepository.findByEmail(email);
+
+        if (user != null && verificationCode.equals(user.getVerificationCode())) {
+            user.setStatus(Status.ACTIVE); // Foydalanuvchini aktivlashtirish
+            userRepository.save(user);
+            return ResponseEntity.ok("Account verified successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid verification code");
+        }
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginUserDto loginUserDto) {
@@ -61,4 +77,5 @@ public class AuthenticationResource {
         return ResponseEntity.ok(refreshTokenResponse);
 
     }
+
 }

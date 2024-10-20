@@ -7,5 +7,5 @@
 package com.example.Hotel.managment.system.entity.enumirated;
 
 public enum Status {
-    ACTIVE,DELETE
+    ACTIVE, PENDING, DELETE
 }

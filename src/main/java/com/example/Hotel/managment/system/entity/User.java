@@ -26,7 +26,10 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_name")
     private String userName;
+
     private String email;
     private String password;
 
@@ -36,7 +39,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
+    private String verificationCode;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(this.role);

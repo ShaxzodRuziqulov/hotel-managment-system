@@ -13,8 +13,10 @@ import com.example.Hotel.managment.system.service.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = RoleMapper.class)
 public interface UserMapper extends EntityMapper<UserDto, User> {
+
+    @Mapping(source = "username", target = "userName")
     UserDto toDto(User user);
 
     User toEntity(UserDto userDto);

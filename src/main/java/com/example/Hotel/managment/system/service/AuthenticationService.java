@@ -10,6 +10,7 @@ import com.example.Hotel.managment.system.entity.User;
 import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.repository.RoleRepository;
 import com.example.Hotel.managment.system.repository.UserRepository;
+import com.example.Hotel.managment.system.security.VerificationCodeGenerator;
 import com.example.Hotel.managment.system.service.dto.LoginUserDto;
 import com.example.Hotel.managment.system.service.dto.RefreshTokenDto;
 import com.example.Hotel.managment.system.service.dto.RegisterUserDto;
@@ -26,6 +27,8 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final VerificationCodeGenerator verificationCodeGenerator;
+    private final EmailService emailService;
 
     private final AuthenticationManager authenticationManager;
 
@@ -33,23 +36,30 @@ public class AuthenticationService {
                                  RoleRepository roleRepository,
                                  PasswordEncoder passwordEncoder,
                                  UserMapper userMapper,
-                                 AuthenticationManager authenticationManager
+                                 VerificationCodeGenerator verificationCodeGenerator, EmailService emailService, AuthenticationManager authenticationManager
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.verificationCodeGenerator = verificationCodeGenerator;
+        this.emailService = emailService;
         this.authenticationManager = authenticationManager;
     }
 
     public UserDto signup(RegisterUserDto input) {
         User user = userMapper.toUser(input);
         user.setPassword(passwordEncoder.encode(input.getPassword()));
-        user.setStatus(Status.ACTIVE);
+        user.setStatus(Status.PENDING);
         if (input.getRoleId() == null) {
             user.setRole(roleRepository.findByName("ROLE_USER"));
         }
+
+        String verificationCode = verificationCodeGenerator.generateVerificationCode();
+        user.setVerificationCode(verificationCode);
         user = userRepository.save(user);
+        emailService.sendVerificationCode(user.getEmail(), verificationCode);
+
         return userMapper.toDto(user);
     }
 

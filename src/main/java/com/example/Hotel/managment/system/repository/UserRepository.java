@@ -27,4 +27,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findActiveUserByEmail(@Param("email") String email, @Param("status") Status status);
 
     Optional<User> findByUserName(String userName);
+
+    User findByEmail(String email);
 }
