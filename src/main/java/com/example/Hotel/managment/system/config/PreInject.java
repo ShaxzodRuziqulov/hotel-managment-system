@@ -49,6 +49,7 @@ public class PreInject {
             User user = new User();
             user.setUserName("admin");
             user.setRole(roleRepository.findByName("ROLE_ADMIN"));
+            user.setFullName("full_name");
             user.setStatus(Status.ACTIVE);
             user.setEmail("admin@gmail.com");
             user.setPassword(encodePassword("123"));

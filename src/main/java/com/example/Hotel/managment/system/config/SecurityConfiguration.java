@@ -35,7 +35,9 @@ public class SecurityConfiguration {
     public SecurityConfiguration(
             AuthenticationProvider authenticationProvider,
             JwtAuthenticationFilter jwtAuthenticationFilter,
-            CustomOAuth2UserService customOAuth2UserService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
+            CustomOAuth2UserService customOAuth2UserService,
+            OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler
+    ) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customOAuth2UserService = customOAuth2UserService;
@@ -52,11 +54,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // CSRFni o'chirish
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
-                        .requestMatchers("/auth/**", "/", "/login", "/oauth2/**").permitAll()  // "/auth/**" endpointlar ochiq
-                        .anyRequest().authenticated()            // Barcha boshqa so'rovlar autentifikatsiya talab qiladi
+                        .requestMatchers("/auth/**", "/", "/login", "/oauth2/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
@@ -64,10 +66,10 @@ public class SecurityConfiguration {
                 )
                 .formLogin(Customizer.withDefaults())
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Sessiyalar stateless (JWT ishlatiladi)
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authenticationProvider(authenticationProvider)  // Custom authentication provider
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // JWT filtrini kiritish
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
