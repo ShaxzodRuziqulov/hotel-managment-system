@@ -54,14 +54,16 @@ public class User extends BaseEntity implements UserDetails, Serializable {
         return Collections.singleton(this.role);
     }
 
-    public User(String userName, String email) {
-        this.userName = userName;
+    public User(String fullName, String email, Role role, Status status) {
+        this.fullName = fullName;
         this.email = email;
+        this.role = role;
+        this.status = status;
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override

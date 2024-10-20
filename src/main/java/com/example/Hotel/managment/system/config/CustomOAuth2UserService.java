@@ -1,6 +1,8 @@
 package com.example.Hotel.managment.system.config;
 
 import com.example.Hotel.managment.system.entity.User;
+import com.example.Hotel.managment.system.entity.enumirated.Status;
+import com.example.Hotel.managment.system.repository.RoleRepository;
 import com.example.Hotel.managment.system.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -17,9 +19,11 @@ import java.util.Set;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public CustomOAuth2UserService(UserRepository userRepository) {
+    public CustomOAuth2UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -30,9 +34,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             throw new OAuth2AuthenticationException("Missing required scopes: email, profile");
         }
         String email = oAuth2User.getAttribute("email");
-        String fullName = oAuth2User.getAttribute("fullName");
+        String fullName = oAuth2User.getAttribute("name");
 
-        User user = userRepository.findByEmail(email).orElseGet(() -> userRepository.save(new User(email, fullName)));
+        User user = userRepository.findByEmail(email).orElseGet(() -> userRepository.save(new User(fullName, email, roleRepository.findByName("ROLE_USER"), Status.ACTIVE)));
         userRepository.save(user);
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                 oAuth2User.getAttributes(), "email");

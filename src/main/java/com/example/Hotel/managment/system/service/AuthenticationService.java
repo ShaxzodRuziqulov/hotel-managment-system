@@ -60,24 +60,24 @@ public class AuthenticationService {
     public User authenticate(LoginUserDto input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getUserName(),
+                        input.getEmail(),
                         input.getPassword()
                 )
         );
 
-        return userRepository.findByUserName(input.getUserName())
+        return userRepository.findByEmail(input.getEmail())
                 .orElseThrow();
     }
 
     public User authenticateRefresh(RefreshTokenDto input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getUserName(),
+                        input.getEmail(),
                         input.getPassword()
                 )
         );
 
-        return userRepository.findByUserName(input.getUserName())
+        return userRepository.findByEmail(input.getEmail())
                 .orElseThrow();
     }
 }
