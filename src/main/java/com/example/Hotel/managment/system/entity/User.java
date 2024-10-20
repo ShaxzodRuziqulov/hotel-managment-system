@@ -9,7 +9,9 @@ package com.example.Hotel.managment.system.entity;
 import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.entity.teamplate.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,15 +24,20 @@ import java.util.Collections;
 @Setter
 @Entity
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends BaseEntity implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fullName;
+
     @Column(name = "user_name")
     private String userName;
 
     private String email;
+
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -39,10 +46,17 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
     private String verificationCode;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(this.role);
+    }
+
+    public User(String userName, String email) {
+        this.userName = userName;
+        this.email = email;
     }
 
     @Override

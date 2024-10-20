@@ -10,6 +10,7 @@ import com.example.Hotel.managment.system.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -28,13 +29,17 @@ import java.util.List;
 public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     public SecurityConfiguration(
             AuthenticationProvider authenticationProvider,
-            JwtAuthenticationFilter jwtAuthenticationFilter
-    ) {
+            JwtAuthenticationFilter jwtAuthenticationFilter,
+            CustomOAuth2UserService customOAuth2UserService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.customOAuth2UserService = customOAuth2UserService;
+        this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
     }
 
     public static final String[] SWAGGER_WHITELIST = {
@@ -50,14 +55,14 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable) // CSRFni o'chirish
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
-                        .requestMatchers("/auth/**").permitAll()  // "/auth/**" endpointlar ochiq
+                        .requestMatchers("/auth/**", "/", "/login", "/oauth2/**").permitAll()  // "/auth/**" endpointlar ochiq
                         .anyRequest().authenticated()            // Barcha boshqa so'rovlar autentifikatsiya talab qiladi
                 )
-                .oauth2Login(oauth2 -> oauth2  // OAuth 2.0 ni qo'shish
-                        .loginPage("/login")   // Login sahifasini ko'rsatish
+                .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
-                                .oidcUserService(oidcUserService())) // OIDC foydalanuvchilarni boshqarish
+                                .userService(customOAuth2UserService)).successHandler(oAuth2LoginSuccessHandler)
                 )
+                .formLogin(Customizer.withDefaults())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Sessiyalar stateless (JWT ishlatiladi)
                 )
