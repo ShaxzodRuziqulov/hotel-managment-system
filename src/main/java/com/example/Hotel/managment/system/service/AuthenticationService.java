@@ -7,6 +7,7 @@
 package com.example.Hotel.managment.system.service;
 
 import com.example.Hotel.managment.system.entity.User;
+import com.example.Hotel.managment.system.entity.enumirated.Status;
 import com.example.Hotel.managment.system.repository.RoleRepository;
 import com.example.Hotel.managment.system.repository.UserRepository;
 import com.example.Hotel.managment.system.security.VerificationCodeGenerator;
@@ -20,12 +21,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final EmailService emailService;
     private final VerificationCodeGenerator verificationCodeGenerator;
 
     private final AuthenticationManager authenticationManager;
@@ -34,12 +38,13 @@ public class AuthenticationService {
                                  RoleRepository roleRepository,
                                  PasswordEncoder passwordEncoder,
                                  UserMapper userMapper,
-                                 VerificationCodeGenerator verificationCodeGenerator, AuthenticationManager authenticationManager
+                                 EmailService emailService, VerificationCodeGenerator verificationCodeGenerator, AuthenticationManager authenticationManager
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.emailService = emailService;
         this.verificationCodeGenerator = verificationCodeGenerator;
         this.authenticationManager = authenticationManager;
     }
@@ -47,14 +52,28 @@ public class AuthenticationService {
     public UserDto signup(RegisterUserDto input) {
         User user = userMapper.toUser(input);
         user.setPassword(passwordEncoder.encode(input.getPassword()));
-//        user.setStatus(Status.PENDING);
+        user.setStatus(Status.PENDING);
         if (input.getRoleId() == null) {
             user.setRole(roleRepository.findByName("ROLE_USER"));
         }
-//        String verificationCode = verificationCodeGenerator.generateVerificationCode();
-//        user.setVerificationCode(verificationCode);
-        user = userRepository.save(user);
+        String verificationCode = generateVerificationCode();
+        user.setVerificationCode(verificationCode);
+
+        userRepository.save(user);
+
+        sendVerificationEmail(user.getEmail(), verificationCode);
+
         return userMapper.toDto(user);
+    }
+
+    private String generateVerificationCode() {
+        return String.format("%06d", new Random().nextInt(999999));
+    }
+
+    private void sendVerificationEmail(String email, String verificationCode) {
+        String subject = "Please verify your email";
+        String body = "Your verification code is: " + verificationCode;
+        emailService.sendEmail(email, subject, body);
     }
 
     public User authenticate(LoginUserDto input) {

@@ -19,8 +19,8 @@ public class OAuth2Config {
     public ClientRegistrationRepository clientRegistrationRepository() {
         ClientRegistration googleRegistration = ClientRegistrations
                 .fromIssuerLocation("https://accounts.google.com")
-                .clientId("114690352756-e4arg6bpv6fec149g6mfufm8rctihl3p.apps.googleusercontent.com")
-                .clientSecret("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")
+                .clientId("724343535278-dm00f9f3151iihk1di485onq895ev646.apps.googleusercontent.com")
+                .clientSecret("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")
                 .build();
 
         return new InMemoryClientRegistrationRepository(googleRegistration);

@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/hotel_managment
     username: postgres
-    password: root
+    password: 123
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,20 +28,19 @@ security:
     secret-key: "MWIxNzc4NDg0MjMzNDVmZGY4ZjgwZTBkMDU4ZWVjYWNiMTdkZjMwNTJhOTNmNDZiYWVmN2MyOGQyNjQ2MzdiMTc="
     expiration-time: 2628000000
     refresh-expiration-time: 864000000
+
   oauth2:
     client:
       registration:
         google:
-          client-id: 114690352756-e4arg6bpv6fec149g6mfufm8rctihl3p.apps.googleusercontent.com
-          client-secret: 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
+          client-id: 724343535278-dm00f9f3151iihk1di485onq895ev646.apps.googleusercontent.com
+          client-secret: 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
           scope:
+            - openid
             - email
             - profile
           redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-          client-name: Google
       provider:
         google:
-          authorization-uri: https://accounts.google.com/o/oauth2/auth
-          token-uri: https://oauth2.googleapis.com/token
-          user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
-          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+          issuer-uri: https://accounts.google.com
+
