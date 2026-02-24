@@ -21,7 +21,7 @@ public interface RoomMapper extends EntityMapper<RoomDto, Room> {
     Room toEntity(RoomDto roomDto);
 
     default Room fromId(Long id) {
-        if (id == 0) {
+        if (id == null || id == 0L) {
             return null;
         }
         Room room = new Room();

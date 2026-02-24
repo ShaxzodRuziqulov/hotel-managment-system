@@ -29,14 +29,15 @@ public class PaymentResource {
     @PostMapping("/payment/create")
     public ResponseEntity<?> create(@RequestBody PaymentDto paymentDto) throws URISyntaxException {
         PaymentDto result = paymentService.create(paymentDto);
-        return ResponseEntity.created(new URI("/api/payment/create" + result.getId())).body(result);
+        return ResponseEntity.created(new URI("/api/payment/" + result.getId())).body(result);
     }
 
     @PutMapping("/payment/update/{id}")
     public ResponseEntity<?> update(@RequestBody PaymentDto paymentDto, @PathVariable Long id) throws URISyntaxException {
-        if (paymentDto.getId() != 0 && !paymentDto.getId().equals(id)) {
+        if (paymentDto.getId() != null && !paymentDto.getId().equals(id)) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
+        paymentDto.setId(id);
         PaymentDto result = paymentService.update(paymentDto);
         return ResponseEntity.ok().body(result);
     }

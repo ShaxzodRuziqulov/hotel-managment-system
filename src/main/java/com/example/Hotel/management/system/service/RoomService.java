@@ -9,11 +9,13 @@ package com.example.Hotel.management.system.service;
 import com.example.Hotel.management.system.entity.Room;
 import com.example.Hotel.management.system.entity.enumirated.RoomStatus;
 import com.example.Hotel.management.system.entity.enumirated.RoomType;
+import com.example.Hotel.management.system.exeption.BadRequestException;
 import com.example.Hotel.management.system.repository.RoomRepository;
 import com.example.Hotel.management.system.service.dto.RoomDto;
 import com.example.Hotel.management.system.service.mapper.RoomMapper;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,12 +53,13 @@ public class RoomService {
     public Room findById(Long id) {
         return roomRepository
                 .findById(id)
-                .orElseGet(Room::new);
+                .orElseThrow(() -> new BadRequestException("Room not found: " + id));
     }
 
     public Room delete(Long id) {
-        return roomRepository
-                .updateRoomByStatus(id, RoomStatus.DELETED);
+        Room room = findById(id);
+        room.setRoomStatus(RoomStatus.DELETED);
+        return roomRepository.save(room);
     }
 
     public List<Room> roomCategory(String category) {
@@ -69,7 +72,7 @@ public class RoomService {
         return roomRepository.findByRoomType(roomType);
     }
 
-    public List<Room> findByRoomTypeAndAndPriceRange(RoomType roomType, Double minPrice, Double maxPrice) {
+    public List<Room> findByRoomTypeAndAndPriceRange(RoomType roomType, BigDecimal minPrice, BigDecimal maxPrice) {
         return roomRepository.findByRoomTypeAndPriceRange(roomType, minPrice, maxPrice);
     }
 

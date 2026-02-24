@@ -17,7 +17,7 @@ public interface HotelMapper extends EntityMapper<HotelDto, Hotel> {
     Hotel toEntity(HotelDto hotelDto);
 
     default Hotel fromId(Long id) {
-        if (id == 0) {
+        if (id == null || id == 0L) {
             return null;
         }
         Hotel hotel = new Hotel();

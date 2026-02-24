@@ -8,6 +8,7 @@ package com.example.Hotel.management.system.service;
 
 import com.example.Hotel.management.system.entity.Payment;
 import com.example.Hotel.management.system.entity.enumirated.PaymentStatus;
+import com.example.Hotel.management.system.exeption.BadRequestException;
 import com.example.Hotel.management.system.repository.PaymentRepository;
 import com.example.Hotel.management.system.service.dto.PaymentDto;
 import com.example.Hotel.management.system.service.mapper.PaymentMapper;
@@ -50,11 +51,13 @@ public class PaymentService {
     public Payment findById(Long id) {
         return paymentRepository
                 .findById(id)
-                .orElseGet(Payment::new);
+                .orElseThrow(() -> new BadRequestException("Payment not found: " + id));
     }
 
     public Payment delete(Long id) {
-        return paymentRepository.updateByPaymentStatus(id, PaymentStatus.FAILED);
+        Payment payment = findById(id);
+        payment.setPaymentStatus(PaymentStatus.FAILED);
+        return paymentRepository.save(payment);
     }
 
 }

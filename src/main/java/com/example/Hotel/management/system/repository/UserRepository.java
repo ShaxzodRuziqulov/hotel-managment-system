@@ -17,9 +17,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("update User u set u.status=:status where u.id=:id")
-    User updateStatus(@Param("id") Long id, @Param("status") Status status);
-
     @Query("select u from User u where u.email=:email and u.status=:status")
     User findActiveUserByEmail(@Param("email") String email, @Param("status") Status status);
 

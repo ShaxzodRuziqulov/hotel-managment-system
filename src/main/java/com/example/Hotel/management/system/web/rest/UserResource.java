@@ -32,14 +32,15 @@ public class UserResource {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody UserDto userDto) throws URISyntaxException {
         UserDto result = userService.create(userDto);
-        return ResponseEntity.created(new URI("/api/user/create" + result.getId())).body(result);
+        return ResponseEntity.created(new URI("/api/user/" + result.getId())).body(result);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@RequestBody UserDto userDto, @PathVariable Long id) throws URISyntaxException {
-        if (userDto.getId() != 0 && !userDto.getId().equals(id)) {
+        if (userDto.getId() != null && !userDto.getId().equals(id)) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
+        userDto.setId(id);
         UserDto result = userService.update(userDto);
         return ResponseEntity.ok().body(result);
     }

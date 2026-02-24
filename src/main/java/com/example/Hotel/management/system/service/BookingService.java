@@ -8,6 +8,7 @@ package com.example.Hotel.management.system.service;
 
 import com.example.Hotel.management.system.entity.Booking;
 import com.example.Hotel.management.system.entity.enumirated.BookingStatus;
+import com.example.Hotel.management.system.exeption.BadRequestException;
 import com.example.Hotel.management.system.repository.BookingRepository;
 import com.example.Hotel.management.system.service.dto.BookingDto;
 import com.example.Hotel.management.system.service.mapper.BookingMapper;
@@ -49,10 +50,12 @@ public class BookingService {
     public Booking findById(Long id) {
         return bookingRepository
                 .findById(id)
-                .orElseGet(Booking::new);
+                .orElseThrow(() -> new BadRequestException("Booking not found: " + id));
     }
 
     public Booking delete(Long id) {
-        return bookingRepository.updateByBookingStatus(id, BookingStatus.DELETED);
+        Booking booking = findById(id);
+        booking.setBookingStatus(BookingStatus.DELETED);
+        return bookingRepository.save(booking);
     }
 }

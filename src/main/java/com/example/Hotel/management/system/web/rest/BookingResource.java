@@ -29,14 +29,15 @@ public class BookingResource {
     @PostMapping("/booking/create")
     public ResponseEntity<?> create(@RequestBody BookingDto bookingDto) throws URISyntaxException {
         BookingDto result = bookingService.create(bookingDto);
-        return ResponseEntity.created(new URI("/api/booking/create" + result.getId())).body(result);
+        return ResponseEntity.created(new URI("/api/booking/" + result.getId())).body(result);
     }
 
     @PutMapping("/booking/update/{id}")
     public ResponseEntity<?> update(@RequestBody BookingDto bookingDto, @PathVariable Long id) throws URISyntaxException {
-        if (bookingDto.getId() != 0 && !bookingDto.getId().equals(id)) {
+        if (bookingDto.getId() != null && !bookingDto.getId().equals(id)) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
+        bookingDto.setId(id);
         BookingDto result = bookingService.update(bookingDto);
         return ResponseEntity.ok().body(result);
     }

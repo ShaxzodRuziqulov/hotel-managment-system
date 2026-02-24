@@ -57,7 +57,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable) // CSRFni o'chirish
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
-                        .requestMatchers("/auth/**", "/me", "/login", "/oauth2/**").permitAll()  // "/auth/**" endpointlar ochiq
+                        .requestMatchers("/auth/**", "/me", "/api/user/me", "/login", "/oauth2/**").permitAll()  // "/auth/**" endpointlar ochiq
                         .anyRequest().authenticated()            // Barcha boshqa so'rovlar autentifikatsiya talab qiladi
                 )
                 .oauth2Login(oauth2 -> oauth2
@@ -78,7 +78,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("http://localhost:8080"));
-        configuration.setAllowedMethods(List.of("GET", "POST"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

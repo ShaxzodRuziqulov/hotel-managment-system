@@ -8,6 +8,7 @@ package com.example.Hotel.management.system.service;
 
 import com.example.Hotel.management.system.entity.User;
 import com.example.Hotel.management.system.entity.enumirated.Status;
+import com.example.Hotel.management.system.exeption.BadRequestException;
 import com.example.Hotel.management.system.repository.UserRepository;
 import com.example.Hotel.management.system.service.dto.UserDto;
 import com.example.Hotel.management.system.service.mapper.UserMapper;
@@ -53,11 +54,13 @@ public class UserService {
     public User findById(Long id) {
         return userRepository
                 .findById(id)
-                .orElseGet(User::new);
+                .orElseThrow(() -> new BadRequestException("User not found: " + id));
     }
 
     public User delete(Long id) {
-        return userRepository.updateStatus(id, Status.DELETE);
+        User user = findById(id);
+        user.setStatus(Status.DELETE);
+        return userRepository.save(user);
     }
 
     public Page<User> getUsers(int page, int size) {

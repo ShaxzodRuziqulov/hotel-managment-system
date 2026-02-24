@@ -22,7 +22,7 @@ public interface PaymentMapper extends EntityMapper<PaymentDto, Payment> {
     Payment toEntity(PaymentDto paymentDto);
 
     default Payment fromId(Long id) {
-        if (id == 0) {
+        if (id == null || id == 0L) {
             return null;
         }
         Payment payment = new Payment();

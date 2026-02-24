@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -30,14 +31,15 @@ public class RoomResource {
     @PostMapping("/room/create")
     public ResponseEntity<?> create(@RequestBody RoomDto roomDto) throws URISyntaxException {
         RoomDto result = roomService.create(roomDto);
-        return ResponseEntity.created(new URI("/api/room/create" + result.getId())).body(result);
+        return ResponseEntity.created(new URI("/api/room/" + result.getId())).body(result);
     }
 
     @PutMapping("/room/update/{id}")
     public ResponseEntity<?> update(@RequestBody RoomDto roomDto, @PathVariable Long id) throws URISyntaxException {
-        if (roomDto.getId() != 0 && !roomDto.getId().equals(id)) {
+        if (roomDto.getId() != null && !roomDto.getId().equals(id)) {
             return ResponseEntity.badRequest().body("Invalid id");
         }
+        roomDto.setId(id);
         RoomDto result = roomService.update(roomDto);
         return ResponseEntity.ok().body(result);
     }
@@ -68,8 +70,8 @@ public class RoomResource {
 
     @GetMapping("/room/find/{roomType}/{minPrice}/{maxPrice}")
     public ResponseEntity<?> findByRoomTypeAndAndPriceRange(@PathVariable RoomType roomType,
-                                                            @PathVariable Double minPrice,
-                                                            @PathVariable Double maxPrice) {
+                                                            @PathVariable BigDecimal minPrice,
+                                                            @PathVariable BigDecimal maxPrice) {
         List<Room> roomList = roomService.findByRoomTypeAndAndPriceRange(roomType, minPrice, maxPrice);
         return ResponseEntity.ok(roomList);
     }

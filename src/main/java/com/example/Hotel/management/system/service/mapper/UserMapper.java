@@ -24,7 +24,7 @@ public interface UserMapper extends EntityMapper<UserDto, User> {
     User toUser(RegisterUserDto registerUserDto);
 
     default User fromId(Long id) {
-        if (id == 0) {
+        if (id == null || id == 0L) {
             return null;
         }
         User user = new User();
